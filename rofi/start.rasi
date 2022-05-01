@@ -1,0 +1,58 @@
+configuration {
+  display-drun: "Search: ";
+  drun-display-format: "{name}";
+  modi: "drun";
+  show-icons: true;
+}
+
+@import "global"
+@import "textbox"
+
+window {
+	anchor: south west;
+	/* background-color: #7777; */
+	background-color: var(backgroundColor);
+	border: var(borderSize);
+	border-color: var(borderColor);
+	location: south west;
+  transparency: "real";
+  x-offset: 0;
+  y-offset: -0;
+	width: 750;
+}
+
+mainbox {
+	children: [listview, inputbar];
+	padding: var(paddingSize);
+	spacing: var(paddingSize);
+}
+
+listview {
+	columns: 5;
+	cycle: true;
+	fixed-columns: true;
+	lines: 4;
+	reverse: false;
+}
+
+element {
+	border-radius: var(borderRadius);
+	orientation: vertical;
+	padding: 20 10;
+	spacing: 10;
+}
+
+element selected,
+element-icon selected,
+element-text selected {
+	background-color: var(borderColor);
+}
+
+element-icon,
+element-text {
+	horizontal-align: 0.5;
+}
+
+element-icon {
+	size: 64;
+}

@@ -1,0 +1,14 @@
+.status {
+  background-color: $borderColor;
+  border: $borderSize solid $borderColor;
+}
+
+.status-item {
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+  font-family: "JetBrains Mono";
+  font-size: 14;
+  font-weight: 700;
+  min-width: 60px;
+  padding: 7;
+}

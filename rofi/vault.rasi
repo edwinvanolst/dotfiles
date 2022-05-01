@@ -1,0 +1,36 @@
+configuration {
+  display-dmenu: "Search: ";
+	/* kb-cancel: "Escape,Super+control+space"; */
+}
+
+@import "global"
+@import "textbox"
+
+window {
+	anchor: center;
+	background-color: var(backgroundColor);
+	border: var(borderSize);
+	border-color: var(borderColor);
+	location: center;
+	width: 250;
+}
+
+mainbox {
+  children: [listview, inputbar];
+  padding: var(paddingSize);
+  spacing: var(paddingSize);
+}
+
+listview {
+  lines: 10;
+  reverse: true;
+}
+
+element {
+  border-radius: var(borderRadius);
+  padding: 8px;
+}
+
+element selected {
+  background-color: var(borderColor);
+}

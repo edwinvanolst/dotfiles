@@ -1,0 +1,13 @@
+#! /bin/sh
+
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+  bspc config window_gap $1
+  bspc config top_padding -$1
+  bspc config left_padding -$1
+  bspc config right_padding -$1
+  bspc config bottom_padding -$1
+  bspc config top_monocle_padding $1
+  bspc config left_monocle_padding $1
+  bspc config right_monocle_padding $1
+  bspc config bottom_monocle_padding $1
+fi

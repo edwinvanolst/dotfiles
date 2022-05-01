@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# close or kill a bspwm window
+
+# show wallpaper if last tile
+bspc query -N -n .focused.tiled.window &> /dev/null \
+  && ! bspc query -N -n .!focused.local.tiled.window &> /dev/null \
+  && show-wallpaper -d
+
+# close focused window
+[ "$1" = "kill" ] && bspc node -k || bspc node -c

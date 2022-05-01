@@ -1,0 +1,145 @@
+@import url(tokyonight.css);
+
+:root {
+  --clrBackground: var(--themeBG);
+  --clrFocus: var(--themeGreen);
+  /* --clrHeader: e0af68; */
+  --clrHeader: var(--themeBG);
+  --clrLink: var(--themeFG);
+  --clrStoryLink: var(--themeBlue);
+  --clrVisited: var(--themePurple);
+  --clrText: var(--themeFG1);
+  --clrSubtext: var(--themeBG3);
+}
+
+/* @import url(sites/mankier.css); */
+
+@-moz-document domain(news.ycombinator.com) {
+  body {
+    background-color: var(--clrBackground);
+    margin: 0;
+  }
+
+  #hnmain {
+    background-color: var(--clrBackground) !important;
+    width: 100% !important;
+  }
+
+  /* header */
+  #hnmain > tbody > tr:first-child > td:first-child {
+    background-color: var(--clrHeader) !important;
+  }
+
+  #hnmain > tbody > tr:first-child > td:first-child > table {
+    padding: 14px !important;
+  }
+
+  @media only screen and (min-width : 300px) and (max-width : 750px) {
+    .pagetop { font-size: 1em !important; }
+    .pagetop .hnname { display: none !important; }
+  }
+
+  #hnmain > tbody > tr:first-child > td:first-child > table td:first-child {
+    padding-right: 11px !important;
+  }
+
+  .pagetop {
+    position: relative;
+    top: 1px;
+  }
+
+  .pagetop .hnname {
+    display: none;
+  }
+
+  .pagetop a {
+    color: var(--clrFocus) !important;
+    font-size: 1em !important;
+    font-weight: bold;
+    padding: 0 3px;
+    position: relative;
+    text-transform: uppercase;
+    top: 1px;
+  }
+
+  .pagetop a:hover {
+    text-decoration: underline !important;
+  }
+
+  #hnmain > tbody > tr:nth-child(2) {
+    display: none;
+  }
+
+  /* posts */
+  .itemlist {
+    /* margin: 0px; */
+  }
+
+  .itemlist a { color: var(--clrLink) !important }
+  .itemlist a:hover { color: var(--clrFocus) !important }
+  .itemlist a.storylink { color: var(--clrStoryLink) !important }
+  .itemlist a.storylink:visited { color: var(--clrVisited) !important }
+  .itemlist a.storylink:hover { color: var(--clrFocus) !important }
+
+  /* .itemlist a:hover { */
+    /* color: var(--clrFocus) !important; */
+    /* text-decoration: none !important; */
+  /* } */
+
+  .itemlist .athing td {
+    padding: 14px 0 4px 0 !important;
+  }
+
+  .itemlist .title {
+    font-size: 1em !important;
+fire  }
+
+  .itemlist .athing .title:first-child {
+    overflow: visible !important;
+  }
+
+  #hnmain .itemlist .rank {
+    color: var(--clrSubtext);
+    display: block;
+    font-size: 0.9em !important;
+    left: 12px;
+    position: relative;
+    text-align: right !important;
+    top: 1px;
+    width: 100%;
+  }
+
+  #hnmain .itemlist .comhead,
+  #hnmain .itemlist .subtext {
+    color: var(--clrSubtext) !important;
+    font-size: 0.8em !important;
+  }
+
+  #hnmain .itemlist .votelinks a {
+    display: block;
+    padding: 0px 3px;
+    position: relative;
+    right: 4px;
+    top: 20px;
+  }
+
+  /* comment text */
+  .commtext {
+    color: var(--clrText) !important;
+  }
+
+  .commtext a {
+    color: var(--clrSubtext) !important;
+  }
+}
+
+/* @-moz-document domain(mankier.com) {
+  body {
+    background-color: green;
+    margin: 0;
+  }
+  main {
+    background-color: blue;
+    /* background-color: var(--clrBackground); */
+  }
+} */

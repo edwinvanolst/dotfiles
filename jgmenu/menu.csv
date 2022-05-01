@@ -1,0 +1,31 @@
+Output,^checkout(output)
+Restart,^checkout(restart)
+Scripts,^checkout(scripts)
+^sep()
+Take Screenshot,screenshot
+Close Window,bspc node -c
+Kill Window,bspc node -k
+Quit Desktop,bspc quit
+
+^tag(output)
+Audioengine, audio-device HD3
+SteelSeries, audio-device stereo-game
+Yamaha, audio-device pci-0000_00_1b
+^sep()
+Both,xrandr --output HDMI-A-0 --auto --output DisplayPort-0 --mode 2560x1080 --primary --rate 60.00 --right-of HDMI-A-0
+Dell,xrandr --output HDMI-A-0 --off --output DisplayPort-0 --mode 2560x1080 --rate 60.00 --primary
+Epson,xrandr --output HDMI-A-0 --auto --mode 1920x1080 --primary --output DisplayPort-0 --off
+
+^tag(restart)
+Restart bspwm,bspc wm -r
+Restart picom,pkill -USR1 picom
+Restart sxhkd,pkill -USR1 -x sxhkd
+
+^tag(scripts)
+Balance,bspc node @/ -B
+Modmap,xmodmap ~/system/xorg/modmap
+Resize 4x3,ratio-resize 4 3
+Resize 16x9,ratio-resize 16 9
+Resize 21x9,ratio-resize 12 5
+Toggle Borders,toggle-borders
+Toggle Hot Corners,toggle-daemon hot-corners

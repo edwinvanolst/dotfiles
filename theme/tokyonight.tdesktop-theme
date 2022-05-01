@@ -1,0 +1,35 @@
+// Tokyo Night theme for Telegram Desktop
+
+clrBG: #1a1b26;
+clrFG: #ffffff;
+clrGrey1: #24283b;
+clrGrey2: #565f89;
+clrGrey3: #9aa5ce;
+clrGrey4: #c0caf5;
+clrBlue: #7aa2f7;
+clrRed: #f7768e;
+clrGreen: #9ece6a;
+clrPurple: #bb9af7;
+clrYellow: #e0af68;
+
+// Main
+windowBg: clrGrey1;
+windowFg: clrFG;
+windowBoldFg: clrFG;
+
+// Messages
+historyLinkOutFg: clrBlue;
+historyOutIconFg: clrGrey2; // Sent/Read Tick
+msgFileThumbLinkOutFg: clrBlue; // Open With
+msgOutBg: clrGrey1;
+msgOutDateFg: clrGrey2;
+msgOutReplyBarColor: clrBlue;
+msgOutServiceFg: clrBlue;
+msgOutShadow: clrBG;
+msgServiceBg: clrGrey2; // Date
+
+// Icons
+historyPeerSavedMessagesBg: clrRed;
+
+// Search bar
+filterInputInactiveBg: clrGrey1;

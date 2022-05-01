@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# make a tiled window floating and sticky
+# or make a floaty window tiled
+
+bspc node -t floating
+if [ $? -eq 0 ]; then
+  echo tiled
+  bspc node -g sticky=on
+else
+  echo floaty
+  bspc node -t tiled
+  bspc node -g sticky=off
+fi

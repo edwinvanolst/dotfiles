@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# --simple
+# ignore tint2 settings; exit on escape; read from stdin.
+# --vsimple
+# same as --simple but also disables icons and ignores jgmenurc.
+
+# csv data
+# label,command,icon
+
+bspc config focused_border_color $EDDE_CLR_BORDER
+jgmenu --simple --csv-file=~/.config/jgmenu/menu.csv $@
+bspc config focused_border_color $EDDE_CLR_FOCUS

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# arguments: Audioengine_HD3, SteelSeries_Arctis_7-00.stereo-game
+newSink=$(pactl list short sinks | grep $1 | cut -f1)
+if [ -n "$newSink" ]; then
+  pactl list short sink-inputs|while read stream; do
+    streamId=$(echo $stream|cut '-d ' -f1)
+    pactl move-sink-input "$streamId" "$newSink"
+    pactl set-default-sink $newSink
+  done
+fi

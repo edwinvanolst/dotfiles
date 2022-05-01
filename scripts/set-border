@@ -1,0 +1,13 @@
+#! /bin/sh
+
+# set-border
+# - 0 = toggle between 0 and previous size
+# - 1 or higher = set border
+
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+  bspc config border_width $1
+  if [ $1 -ne 0 ]; then
+    sed -i -e "/^menu_border =/ s/= .*/= $1/" ~/system/jgmenu/jgmenurc
+    export EDDE_BORDER=$1
+  fi
+fi

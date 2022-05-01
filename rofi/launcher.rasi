@@ -1,0 +1,101 @@
+configuration {
+  application-fallback-icon: "terminal";
+  drun-display-format: "{name}";
+  /* drun-display-format: "{name}&#09;<span foreground="#414868">{exec}</span>"; */
+  drun {
+    display-name: "Start";
+  }
+  run {
+    display-name: "Run";
+  }
+  kb-row-tab: "Control+Tab";
+  kb-mode-next: "Tab";
+  show-icons: true;
+}
+
+/* @import "global" */
+/* @import "textbox" */
+
+* {
+  /* borderColor: rgba(26,27,38,1); */
+  borderColor: rgba(0,0,0,1);
+  borderRadius: 3;
+  borderSize: 4px;
+  /* windowColor: rgba(26,27,38,0.7); */
+  windowColor: rgba(0,0,0,0.84);
+  /* ~ */
+  background-color: transparent;
+  color: #fff;
+  padding: 0;
+  spacing: 0;
+}
+
+window {
+	anchor: south;
+	background-color: var(windowColor);
+	border: var(borderSize);
+	/* border: 5; */
+	border-color: var(borderColor);
+	location: south;
+  padding: 7;
+  y-offset: -91;
+  x-offset: 0;
+  /* x-offset: -63; */
+	/* width: 357; */
+	width: 280;
+	/* width: 406; */
+}
+
+mainbox {
+  children: [listview, inputbar];
+  /* padding: var(paddingSize); */
+  /* spacing: 7; */
+}
+
+listview {
+  columns: 1;
+  cycle: true;
+  fixed-height: false;
+  lines: 10;
+  padding: 0 0 7 0;
+  reverse: true;
+}
+
+element {
+  border-radius: 3;
+  /* orientation: vertical; */
+  padding: 7;
+  spacing: 7;
+}
+
+element selected {
+	background-color: var(borderColor);
+}
+
+element-icon,
+element-text {
+	vertical-align: 0.5;
+}
+
+element-icon {
+	size: 24;
+}
+
+element-text selected {
+  color: #9ece6a;
+  /* tab-stops: 164px; */
+}
+
+inputbar {
+  /* padding: 14 7 7 7; */
+}
+
+prompt {
+	background-color: var(borderColor);
+  border-radius: var(borderRadius);
+  padding: 7;
+}
+
+entry {
+  padding: 7;
+}

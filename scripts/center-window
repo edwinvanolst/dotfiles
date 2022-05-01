@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# center a floating window in bspwm
+#
+# dependencies: jq, xdotool
+
+# get active window dimensions
+INFO=($(bspc query -T -n | jq .client.floatingRectangle \
+  | jq -r .x,.y,.width,.height))
+
+# get screen dimensions (returns: WIDTH, HEIGHT)
+eval $(xdotool getdisplaygeometry --shell)
+
+# center floating window
+if bspc query -N -n .focused.floating &> /dev/null; then
+  X=$(((WIDTH-INFO[2])/2-INFO[0]))
+  Y=$(((HEIGHT-INFO[3])/2-INFO[1]))
+  # X=$(((WIDTH-INFO[2])/2))
+  # Y=$(((HEIGHT-INFO[3])/2))
+  echo $X $Y
+  echo ${INFO[0]} ${INFO[1]}
+  
+  bspc node -v $X $Y
+fi

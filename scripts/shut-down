@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# 
+#bspc query -N -n .window && shutdown
+
+if bspc query -N -n .window &> /dev/null; then
+  bspc query -N -n .hidden | xargs -I ID -n 1 bspc node ID -g hidden=off
+  notify "No"
+else
+  if [ "$1" = "reboot" ]; then
+    reboot
+  else
+    shutdown now
+  fi
+fi

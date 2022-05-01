@@ -1,0 +1,14 @@
+* {
+  borderRadius: 2px;
+  borderSize: ${EDDE_BORDER}px;
+  paddingSize: 14px;
+
+  backgroundColor: ${EDDE_CLR_WINDOW};
+  borderColor: ${EDDE_CLR_FOCUS};
+  searchColor: ${EDDE_CLR_BORDER};
+  textColor: #ffffff;
+
+  background-color: inherit;
+  text-color: var(textColor);
+  spacing: 0px;
+}

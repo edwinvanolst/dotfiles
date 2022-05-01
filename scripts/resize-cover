@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# Resize the focused bspwm node 
+
+# Make this mouse-friendly in the future:
+# - change pointer
+# - listen for click
+# - ...
+# - change pointer back
+
+# get target node
+NODE=$(xqp)
+[ "$NODE" = "0x00000000" ] && NODE="@/"
+
+
+# target should be tiled
+TARGET=($(bspc query -T -n $NODE | jq 'if .client.state == "tiled" then .client.tiledRectangle else .client.floatingRectangle end | .height,.width,.x,.y'))
+#TARGET=($(bspc query -T -n $NODE | jq '.client.tiledRectangle else .client.floatingRectangle | .height,.width,.x,.y'))
+
+echo ${TARGET[0]}
+# focused window should be floating
+FOCUS=($(bspc query -T -n | jq '.client.floatingRectangle | .height,.width,.x,.y'))
+
+# resize
+H=$((TARGET[0] - FOCUS[0]))
+W=$((TARGET[1] - FOCUS[1]))
+bspc node -z bottom 0 $H
+bspc node -z right $W 0
+
+# move
+X=$((TARGET[2] - FOCUS[2]))
+Y=$((TARGET[3] - FOCUS[3]))
+bspc node -v $X $Y

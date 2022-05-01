@@ -1,0 +1,127 @@
+#!/usr/bin/env bash
+#
+# Hotspots for Xorg:
+# - Corners: BL, BR, TL, TR
+# - Edges: B, T, L, R
+# - Events: onEnter, onExit
+#
+# Dependencies: xdotool
+#
+# TODO:
+# - better multimonitor support
+
+# hotspot size
+SIZE=2
+
+# edge dimensions (width, height)
+B=(1100 140)
+T=(700 $SIZE)
+L=(460 700)
+R=(140 700)
+
+# corner dimensions (width, height)
+BL=(770 630)
+BR=($SIZE $SIZE)
+TL=(400 300)
+TR=($SIZE $SIZE)
+
+# event handlers
+function cycleDesktops {
+  # by resetting $ZONE the onEnter event will fire
+  # repeatedly and no onExit event will be given
+  ZONE=""
+  ~/system/scripts/show-desktop next
+  sleep 0.3
+}
+
+function onEnter {
+  # echo onEnter $1
+  ZONE=$1
+  case "$1" in
+    'B') eww open-many dock status &> /dev/null;;
+    'L') eww open panel &> /dev/null;;
+    'R') eww open bar &> /dev/null;;
+    'TR') cycleDesktops;;
+  esac
+}
+
+function onExit {
+  # echo onExit $1
+  ZONE=''
+  case "$1" in
+    'B') eww close dock status &> /dev/null;;
+    'L') eww close panel &> /dev/null;;
+    'R') eww close bar &> /dev/null;;
+    'TR') cycleDesktops;;
+  esac
+}
+
+# get screen dimensions (returns: WIDTH, HEIGHT)
+eval $(xdotool getdisplaygeometry --shell)
+
+# calculate coordinates
+BLY=$((HEIGHT-BL[1]))
+BRX=$((WIDTH-BR[0]))
+BRY=$((HEIGHT-BR[1]))
+TRX=$((WIDTH-TR[0]))
+BX1=$(((WIDTH-B[0])/2))
+BX2=$(((WIDTH+B[0])/2))
+BY=$((HEIGHT-B[1]))
+LY1=$(((HEIGHT-L[1])/2))
+LY2=$(((HEIGHT+L[1])/2))
+RX=$((WIDTH-R[0]))
+RY1=$(((HEIGHT-R[1])/2))
+RY2=$(((HEIGHT+R[1])/2))
+H=$((HEIGHT-SIZE))
+W=$((WIDTH-SIZE))
+
+# watch mouse
+while :; do
+  sleep 0.1
+  
+  # get mouse location (returns: X, Y)
+  eval $(xdotool getmouselocation --shell)
+
+  if [ -z "$ZONE" ]; then
+    if [[ "$Y" -ge "$H" ]]; then
+      if [[ "$X" -lt "$SIZE" ]]; then
+        onEnter BL
+      elif [[ "$X" -gt "$BX1" && "$X" -lt "$BX2" ]]; then
+        onEnter B
+      elif [[ "$X" -gt "$W" ]]; then
+        onEnter BR
+      fi
+    elif [[ "$Y" -lt "$SIZE" ]]; then
+      if [[ "$X" -lt "$SIZE" ]]; then
+        onEnter TL
+      elif [[ "$X" -gt "$BX1" && "$X" -lt "$BX2" ]]; then
+        onEnter T
+      elif [[ "$X" -gt "$W" ]]; then
+        onEnter TR
+      fi
+    elif [[ "$X" -lt "$SIZE" && "$Y" -gt "$LY1" && "$Y" -lt "$LY2" ]]; then
+      onEnter L
+    elif [[ "$X" -gt "$W" && "$Y" -gt "$RY1" && "$Y" -lt "$RY2" ]]; then
+      onEnter R
+    fi
+  else 
+    case "$ZONE" in
+      'B') [[ "$X" -lt "$BX1" || "$X" -gt "$BX2" || "$Y" -lt "$BY" ]] \
+        && onExit B;;
+      'L') [[ "$X" -ge "${L[0]}" || "$Y" -lt "$LY1" || "$Y" -gt "$LY2" ]] \
+        && onExit L;;
+      'R') [[ "$X" -le "$RX" || "$Y" -lt "$RY1" || "$Y" -gt "$RY2" ]] \
+        && onExit R;;
+      'T') [[ "$X" -lt "$BX1" || "$X" -gt "$BX2" || "$Y" -gt "${T[1]}" ]] \
+        && onExit T;;
+      'BL') [[ "$X" -ge "${BL[0]}" || "$Y" -lt "$BLY" ]] \
+        && onExit BL;;
+      'BR') [[ "$X" -le "$BRX" || "$Y" -lt "$BRY" ]] \
+        && onExit BR;;
+      'TL') [[ "$X" -ge "${TL[0]}" || "$Y" -ge "${TL[1]}" ]] \
+        && onExit TL;;
+      'TR') [[ "$X" -le "${TRX}" || "$Y" -ge "${TR[1]}" ]] \
+        && onExit TR;;
+    esac
+  fi
+done

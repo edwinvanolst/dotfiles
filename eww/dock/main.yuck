@@ -1,0 +1,94 @@
+(defwindow dock
+  :monitor 0
+  :geometry (geometry :x 0 :y -28 :anchor "bottom center")
+  (dock))
+
+(defwidget dock []
+  (box
+    :class "dock"
+    :space-evenly false
+    (dock-group
+      (dock-item
+        :icon "firefox"
+        :lclick "quick-app -c firefox -i Navigator&"
+        :rclick "firefox&"
+      )
+      (dock-item
+        :icon "nautilus"
+        :lclick "quick-app -c Thunar -f thunar"
+      )
+      (dock-item
+        :icon "terminal"
+        :lclick "quick-app -c kitty -i quick -f kitty --name quick"
+        :rclick "cd ~ && kitty&"
+      )
+    )
+    (dock-group
+      (dock-item
+        :icon "email"
+      )
+      (dock-item
+        :icon "telegram"
+        :lclick "quick-app -c TelegramDesktop -f telegram-desktop"
+      )
+      (dock-item
+        :icon "weechat"
+      )
+      (dock-item
+        :icon "discord-development"
+        :lclick "quick-app -c discord -f"
+      )
+    )
+    (dock-group
+      (dock-item
+        :icon "preferences-desktop-color"
+        ;:icon "openrgb"
+        ;:icon "gcolor3"
+        :lclick "quick-app -c Gcolor3 -f gcolor3"
+      )
+      (dock-item
+        :icon "gnome-calculator"
+        :lclick "quick-app -c gnome-calculator -f"
+      )
+      (dock-item
+        :icon "easyeffects"
+        :lclick "quick-app -c easyeffects -f"
+      )
+      (dock-item
+        :icon "obs"
+        :lclick "quick-app -c obs -f"
+      )
+      (dock-item
+        :icon "deepin-music-player"
+      )
+    )
+    (dock-group
+      (dock-item :icon "youtube" :lclick "quick-app -c mpv&")
+      (dock-item
+        :icon "steam"
+        :lclick "quick-app -c Steam steam&"
+      )
+      (dock-item :icon "blender" :lclick "quick-app -c Blender blender&")
+      (dock-item :icon "godot" :lclick "quick-app -c Godot -f godot&")
+      (dock-item :icon "inkscape" :lclick "quick-app -c Inkscape inkscape&")
+    )
+  )
+)
+
+(defwidget dock-group []
+  (box
+    :class "dock-group"
+    (children)
+  )
+)
+
+(defwidget dock-item [icon ?lclick ?rclick]
+  (box
+    :class "dock-item"
+    (button
+      :onclick lclick
+      :onrightclick rclick
+      (image :path "${appIcons}${icon}.svg")
+    )
+  )
+)

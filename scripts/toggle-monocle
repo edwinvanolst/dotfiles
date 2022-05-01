@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# toggle monocle mode for bspwm
+
+MONOCLE=$(eww get monocleMode)
+if [ $MONOCLE = true ]; then
+  eww update monocleMode=false
+  # notify "Zoom Out"
+else
+  eww update monocleMode=true
+  # notify "Zoom In"
+fi
+bspc desktop -l next

@@ -1,0 +1,44 @@
+; windows
+(defwindow status
+  :monitor 0
+  :geometry (geometry :x 0 :y 28 :anchor "top center")
+  (status))
+
+(defwidget status []
+  (box
+    :class "status"
+    :space-evenly false
+    :spacing 5
+    (status-item :color "green" :icon "clock" :text time)
+    (status-item :color "yellow" :icon "calendar" :text date)
+    (status-item
+      :color "red"
+      :icon "thermometer"
+      :text "${EWW_TEMPS["CPU"]}°"
+    )
+    (status-item
+      :color "blue"
+      :icon "cpu"
+      :text "${round(EWW_CPU["avg"],0)}%"
+    )
+    (status-item
+      :color "purple"
+      :icon "database"
+      :text "${round(EWW_RAM["used_mem_perc"],0)}%"
+    )
+  )
+)
+
+(defwidget status-item [icon ?color text]
+  (box                  
+    :class "status-item"
+    :space-evenly false
+    :spacing 7
+    (icon :color color :name icon)
+    text
+  )
+)
+
+(defwidget status-seperator []
+  (box :class "status-seperator")
+)

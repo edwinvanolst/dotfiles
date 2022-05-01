@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# settings=~/workspace/desktop/settings.ini
+# log=~/logs/desktop.log
+# source $settings
+
+setBrightness() {
+	#dunstify -r 2 Brightness $1
+  eww update brightness=$1
+  notify --icon=display-brightness-high-symbolic "$1"
+	# sed -i "s/^brightness=[0-9]\{1,2\}$/brightness=$1/" $settings
+	if [[ $1 -eq 10 ]]; then
+    b=1
+  elif [[ $1 -eq 0 ]]; then
+    b=0.02
+  else
+    b=0.$1
+  fi
+	xrandr --output DisplayPort-0 --brightness $b
+	# echo set brightness $b >> $log
+}
+
+brightness=$(eww get brightness)
+
+if [[ $1 == up ]]; then
+	[[ $brightness -lt 10 ]] && setBrightness $((++brightness))
+elif [[ $1 == down ]]; then
+	[[ $brightness -gt 0 ]] && setBrightness $((--brightness))
+fi

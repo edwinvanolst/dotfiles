@@ -1,0 +1,16 @@
+.bar {
+  background-color: $borderColor;
+  // border: $borderSize solid $borderColor;
+  padding: $borderSize 0 0 0;
+}
+
+.bar-group {
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+  margin: 0 $borderSize $borderSize $borderSize;
+  padding: 7;
+}
+
+.bar-item {
+  padding: 7;
+}

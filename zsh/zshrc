@@ -1,0 +1,9 @@
+# ~/.zshrc
+
+# aliases
+[ -f ~/system/zsh/aliases ] && source ~/system/zsh/aliases
+
+# autocompletion
+autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+eval "$(starship init zsh)"

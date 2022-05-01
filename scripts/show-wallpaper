@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# show or hide desktop wallpaper
+#
+# options:
+# -d: also show dock (or hide with -h)
+# -h: hide wallpaper
+#
+# dependencies: feh, hsetroot
+# used in: close-window, event-handler, show-desktop
+
+dock=false
+hide=false
+while getopts 'dh' opt; do
+  case "${opt}" in
+    d) dock=true ;;
+    h) hide=true ;;
+  esac
+done
+
+if [ $hide = true ]; then
+  hsetroot -solid black &
+  [ $dock = true ] && eww close dock status &
+else
+  [ $dock = true ] && eww open-many dock status &
+  ~/.fehbg &
+fi

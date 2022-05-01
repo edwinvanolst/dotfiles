@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# start or stop a daemon
+
+if [ $# -eq 1 ]; then
+  PIDS=($(pgrep -f $1))
+  echo ${PIDS[@]}
+  if [ ${#PIDS[@]} -gt 1 ]; then
+    kill ${PIDS[0]}
+    notify -r 5 "Stopped: $1"
+    echo stopped
+  else
+    $1 &
+    notify -r 5 "Started: $1"
+    echo started
+  fi
+fi

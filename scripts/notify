@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# desktop notifications
+dunstify -r 9 -t 500 -h string:x-dunst-stack-tag:edde $@

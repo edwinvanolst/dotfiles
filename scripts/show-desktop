@@ -1,0 +1,74 @@
+#!/bin/sh
+
+hideBackground() {
+  show-wallpaper -dh
+}
+
+showBackground() {
+  show-wallpaper -d
+}
+
+showDesktop() {
+  bspc desktop -f $1
+  D=$(bspc query -D -d --names)
+  notify --icon=square "$D"
+}
+
+# get current desktop name
+CURRENT_DESKTOP=$(bspc query -D -d --names)
+
+# check if current desktop is busy
+bspc query -N -d -n .tiled.window &> /dev/null
+CURRENT_BUSY=!$?
+
+# check if current desktop is tiling
+#if ((CURRENT_BUSY)); then
+  bspc query -N -d -n .tiled.window &> /dev/null
+  CURRENT_TILING=!$?
+#fi
+
+# handle argument
+case $1 in
+  [0-9])
+    # show desktop by number
+    if [ $1 -ne $CURRENT_DESKTOP ]; then
+      bspc query -N -d $1 -n .tiled.window &> /dev/null
+      NEXT_TILING=!$?
+      if ((CURRENT_TILING)) && ! ((NEXT_TILING)); then
+        showBackground
+      elif ! ((CURRENT_TILING)) && ((NEXT_TILING)); then
+        hideBackground
+      fi
+      #echo "show desktop $1"
+      showDesktop $1
+    fi
+    ;;
+  empty)
+    # show empty or go back
+    if ((CURRENT_BUSY)); then
+      ((CURRENT_TILING)) && showBackground
+      showDesktop any.local.\!occupied
+    else
+      #TODO if no busy desktops this shouldnt do anything 
+      ! ((CURRENT_TILING)) && hideBackground
+      showDesktop older
+    fi
+    ;;
+  *)
+    # cycle desktops
+    [ "$1" = "prev" ] && NEXT='prev' || NEXT='next'
+    NEXT+='.local.occupied'
+    bspc query -N -d $NEXT &> /dev/null
+    NEXT_BUSY=!$?
+    if ((NEXT_BUSY)); then
+      bspc query -N -d $NEXT -n .tiled.window &> /dev/null
+      NEXT_TILING=!$?
+      if ((CURRENT_TILING)) && ! ((NEXT_TILING)); then
+        showBackground
+      elif ! ((CURRENT_TILING)) && ((NEXT_TILING)); then
+        hideBackground
+      fi
+      showDesktop $NEXT
+    fi
+    ;;
+esac

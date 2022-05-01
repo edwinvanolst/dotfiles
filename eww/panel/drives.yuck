@@ -1,0 +1,77 @@
+(defwidget dock-drives []
+  (box
+    :orientation "v"
+    (disk
+      :label "System"
+      :mount "/"
+      :space "100"
+    )
+    (disk
+      :label "SSD 1"
+      :mount "/mnt/ssd250"
+      :space "250"
+    )
+    (disk
+      :label "SSD 2"
+      :mount "/mnt/games"
+      :space "250"
+    )
+    (disk
+      :label "HDD"
+      :mount "/mnt/hdd500"
+      :space "500"
+    )
+    (disk
+      :label "RAID"
+      :mount "/mnt/raid"
+      :space "3000"
+    )
+  )
+)
+
+(defwidget disk [label mount space]
+  (eventbox
+    :class "disk-wrapper"
+  (button
+    :onclick "quick file ${mount}"
+    (box
+      :class "disk"
+      :space-evenly false
+      (box
+        :class "disk-icon"
+        :width 30
+        (image :path "/home/edwin/workspace/icons/hard-drive.svg")
+      )
+      (box
+        :class "disk-usage"
+        :orientation "v"
+        :spacing 3
+        :space-evenly false
+        (box
+          :class "disk-usage-text"
+          :width 140
+          (box
+            :halign "start"
+            :valign "start"
+            label
+          )
+          (box
+            :halign "end"
+            :valign "end"
+            :hexpand true
+            :vexpand true
+            "${round(EWW_DISK[mount].free/1000000000, 0)} GB"
+          )
+        )
+        (scale
+          :class "disk-usage-bar"
+          :marks "false"
+          :max 100 
+          :min 0
+          :value {EWW_DISK[mount].used_perc}
+        )
+      )
+    )
+  )
+  )
+)

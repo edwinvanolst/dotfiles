@@ -1,0 +1,104 @@
+#!/usr/bin/env bash
+
+# Buttons
+
+ondown() {
+  overlay=$(eww get overlay)
+  if [ "$overlay" -gt 0 ]; then
+    if [ "$overlay" -gt 2 ]; then
+      overlay=1
+    else
+      ((++overlay))
+    fi
+    eww update overlay=$overlay
+  else
+    xdotool key Down
+  fi
+}
+
+onenter() {
+  echo "enter"
+}
+
+onesc() {
+  xdotool key f
+}
+
+onforward() {
+  echo "forward"
+}
+
+onleft() {
+  xdotool key Left
+}
+
+onlinkmenu() {
+  eww open tv --toggle
+}
+
+onnext() {
+  echo "next"
+  # xdotool key XF86AudioNext
+}
+
+onplay() {
+  # jellyfin, youtube: space
+  xdotool key space
+}
+
+onpause() {
+  # jellyfin, youtube: space
+  xdotool key space
+}
+
+onprev() {
+  echo "prev"
+  # xdotool key XF86AudioPrev
+}
+
+onrewind() {
+  echo "rewind"
+  # xdotool key Left
+}
+
+onright() {
+  xdotool key Right
+}
+
+onstop() {
+  echo "stop"
+  # xdotool key XF86AudioStop
+}
+
+onup() {
+  if [ "$(eww get overlay)" -gt 0 ]; then
+    eww update overlay=${overlay-1}
+  else
+    xdotool key Up
+  fi
+}
+
+# cec client
+filter() {
+	perl -nle 'BEGIN{$|=1} /key released: (.*) \(.*\)/ && print $1'
+}
+
+cec-client | filter | while read k; do
+	case "$k" in
+		backward) onprev;;
+		down) ondown;;
+		exit) onesc;;
+		forward) onnext;;
+		left) onleft;;
+		pause) onpause;;
+		play) onplay;;
+		rewind) onrewind;;
+		right) onright;;
+		select) onenter;;
+		stop) onstop;;
+		up) onup;;
+		'Fast forward') onforward;;
+		'root menu') onlinkmenu;;
+		# *) echo "unrecognized button ($cmd)";;
+	esac
+done

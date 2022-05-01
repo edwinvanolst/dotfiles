@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# toggle borders in bspwm
+
+# if [ $(bspc config border_width) -eq 0 ]; then
+HIDE=$(eww get disableBorders)
+if [ "$HIDE" = "true" ]; then
+  eww update disableBorders=false
+  set-border $EDDE_BORDER
+else
+  eww update disableBorders=true
+  set-border 0
+fi

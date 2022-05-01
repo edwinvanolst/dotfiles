@@ -1,0 +1,21 @@
+inputbar {
+	border: 0;
+	border-radius: var(borderRadius);
+	background-color: var(searchColor);
+	padding: 8;
+}
+
+prompt {
+  text-color: var(borderColor);
+}
+
+case-indicator,entry,prompt {
+	background-color: var(searchColor);
+}
+
+/*
+entry {
+  placeholder: "Search";
+  placeholder-color: var(borderColor);
+}
+*/

@@ -1,0 +1,21 @@
+$borderColor: #24283b;
+$borderRadius: 5px;
+$borderSize: 5px;
+$bgColor: #1a1b26;
+$fgColor: #c0caf5;
+
+* {
+  all: unset;
+  color: $fgColor;
+}
+
+// .window {
+//   background-color: $bgColor;
+//   border: $borderSize solid $borderColor;
+//   color: $fgColor;
+// }
+
+@import "bar/style.scss";
+@import "dock/style.scss";
+@import "panel/style.scss";
+@import "status/style.scss";

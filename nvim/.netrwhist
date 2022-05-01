@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/edwin/system/bash/alias'
+let g:netrw_dirhist_5='/home/edwin/system/xorg'
+let g:netrw_dirhist_4='/home/edwin/system/rofi'
+let g:netrw_dirhist_3='/home/edwin/.config'
+let g:netrw_dirhist_2='/home/edwin/system/bspwm'
+let g:netrw_dirhist_1='/home/edwin/.local/desktop'
+let g:netrw_dirhist_0='/home/edwin/.local'
+let g:netrw_dirhist_9='/home/edwin/.config/alacritty'
+let g:netrw_dirhist_8='/home/edwin/.config'
+let g:netrw_dirhist_7='/home/edwin/.config/bspwm'

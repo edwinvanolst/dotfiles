@@ -1,0 +1,194 @@
+(defwindow bar
+  :monitor 0
+  :geometry (geometry :x -28 :y 0 :anchor "center right")
+(bar))
+
+(defwidget bar []       
+  (box
+    :class "bar"
+    :orientation "v"
+    :space-evenly false
+    (bar-group
+      (bar-item-center-window)
+      (bar-item-resize-ratio)
+      (bar-item-resize)
+      (bar-item-toggle-floaty)
+      (bar-item-close-window)
+    )
+    (bar-group
+      (bar-item-balance)
+      (bar-item-rotate)
+      (bar-item-focus-parent)
+    )
+    (bar-group
+      (bar-item-toggle-borders)
+      (bar-item-toggle-hidden)
+      (bar-item-toggle-monocle)
+    )
+    (bar-group
+      (bar-item-empty-desktop)
+      (bar-item-cycle-desktops)
+    )
+    (bar-group
+      ;(bar-item-clipboard)
+      (bar-item-screenshot)
+      (bar-item-power)
+    )
+  )
+)
+
+(defwidget bar-group []
+  (box
+    :class "bar-group"
+    :orientation "v"
+    (children)
+  )
+)
+
+(defwidget bar-item [icon ?color ?lclick ?rclick]
+  (box
+    :class "bar-item"
+    (eventbox
+      :onscroll "resize-window {}"
+      (button
+        :onclick lclick
+        :onrightclick rclick
+        ;:timeout 200
+        (icon :name icon :color color)
+      )
+    )
+  )
+)
+
+(defwidget bar-item-balance []
+  (bar-item
+    :icon "columns"
+    :color "yellow"
+    :lclick "bspc node @/ -B"
+  )
+)
+
+(defwidget bar-item-center-window []
+  (bar-item
+    :icon "minimize"
+    :color "yellow"
+    :lclick "center-window"
+  )
+)
+
+(defwidget bar-item-clipboard []
+  (bar-item
+    :icon "clipboard"
+    :color "yellow"
+  )
+)
+
+(defwidget bar-item-close-window []
+  (bar-item
+    :icon "x-circle"
+    :color "red"
+    :lclick "close-window"
+  )
+)
+
+(defwidget bar-item-cycle-desktops []
+  (bar-item
+    :icon "skip-forward"
+    :color "blue"
+    :lclick "show-desktop next"
+    :rclick "show-desktop prev"
+  )
+)
+
+(defwidget bar-item-empty-desktop []
+  (bar-item
+    :icon "plus-circle"
+    :color "green"
+    :lclick "show-desktop empty"
+  )
+)
+
+(defwidget bar-item-focus-parent []
+  (bar-item
+    :icon "arrow-up-circle"
+    :color "blue"
+    :lclick "bspc node -f @parent"
+  )
+)
+
+(defwidget bar-item-power []
+  (bar-item
+    :icon "power"
+    :color "red"
+    :lclick "shut-down"
+  )
+)
+
+(defwidget bar-item-resize []
+  (bar-item
+    :icon "maximize-2"
+    :color "blue"
+    :lclick "resize-ratio"
+    :lclick "bspc node -z top_left -16 -9 \
+      && bspc node -z bottom_right 16 9"
+    :rclick "bspc node -z top_left 16 9 \
+      && bspc node -z bottom_right -16 -9"
+  )
+)
+
+(defwidget bar-item-resize-ratio []
+  (bar-item
+    :icon "youtube"
+    :color "green"
+    :lclick "resize-ratio 16 9"
+  )
+)
+
+(defwidget bar-item-rotate []
+  (bar-item
+    :icon "rotate-cw"
+    :color "green"
+    :lclick "bspc node -R 90"
+  )
+)
+
+(defwidget bar-item-screenshot []
+  (bar-item
+    :icon "camera"
+    :color "purple"
+    :lclick "notify hello"
+    :rclick "scrot -s -l mode=edge,width=7,color=\"#FFFFFF\",opacity=20 -e 'mv $f ~/unsorted/screenshots'"
+  )
+)
+
+(defwidget bar-item-toggle-borders []
+  (bar-item
+    :icon "maximize"
+    :icon {disableBorders ? "square" : "maximize"}
+    :color "purple"
+    :lclick "toggle-borders"
+  )
+)
+
+(defwidget bar-item-toggle-floaty []
+  (bar-item
+    :icon {focusIsFloaty ? "corner-left-down" : "corner-right-up"}
+    :color "purple"
+    :lclick "toggle-floaty"
+  )
+)
+
+(defwidget bar-item-toggle-hidden []
+  (bar-item
+    :icon "eye"
+    :color "red"
+    :lclick "toggle-hidden"
+  )
+)
+(defwidget bar-item-toggle-monocle []
+  (bar-item
+    :icon {monocleMode ? "zoom-out" : "zoom-in"}
+    :color "yellow"
+    :lclick "toggle-monocle"
+  )
+)

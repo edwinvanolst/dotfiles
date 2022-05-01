@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# hide or show all floating windows in bspwm
+#
+# dependencies: xargs
+
+IDS=($(bspc query -N -n .floating.hidden))
+if [ $? -eq 0 ]; then
+  # show hidden floaties
+  echo -n ${IDS[@]} | xargs -d ' ' -I ID bspc node ID -g hidden=off
+else
+  # hide floaties
+  bspc query -N -n .floating | xargs -I ID bspc node ID -g hidden=on
+fi

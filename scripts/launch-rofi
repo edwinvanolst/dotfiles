@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+pid=$(cat /run/user/1000/rofi.pid 2> /dev/null)
+if [ $? = 1 ] || [ ! -d "/proc/$pid" ]; then
+	bspc config focused_border_color $EDDE_CLR_BORDER
+	if [ "$1" = "vault" ]; then
+		ROFI_PASS_CONFIG="$HOME/system/rofi/rofi-pass.conf" rofi-pass
+	else
+		rofi -show drun -theme start
+	fi
+	bspc config focused_border_color $EDDE_CLR_FOCUS
+fi

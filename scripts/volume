@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# usage: volume.sh up|down|mute
+#盛
+WAV=~/unsorted/volume.wav
+VOL=$(eww get volume)
+# VOL=$(pamixer --get-volume)
+
+if [ "$1" = "down" ] && [ $VOL != "0" ]; then
+  ((VOL-=1))
+  eww update volume=$VOL
+  pamixer -d 10
+  pw-play $WAV
+  # notify --icon=audio-volume-high-symbolic $VOL
+elif [ "$1" = "up" ] && [ $VOL != "10" ]; then
+  ((VOL+=1))
+  eww update volume=$VOL
+  pamixer -i 10
+  pw-play $WAV
+  # notify --icon=audio-volume-high-symbolic $VOL
+elif [ "$1" = "mute" ]; then
+  muted=$(pamixer --get-mute)
+  if [ "$muted" = "false" ]; then
+    eww update mute=true
+    eww update vol_icon="婢"
+    # eww update vol_icon=""
+    pamixer -m
+  else
+    eww update mute=false
+    eww update vol_icon="墳"
+    pamixer -u
+  fi
+fi

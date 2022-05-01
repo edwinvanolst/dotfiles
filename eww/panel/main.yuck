@@ -1,0 +1,104 @@
+(defwindow panel
+  :monitor 0
+  :geometry (geometry :x 28 :y 0 :anchor "center left")
+  (panel))
+
+(defwidget panel []
+  (box
+    :class "panel"
+    :orientation "v"
+    :space-evenly false
+    (panel-monitors)
+    (panel-sliders)
+  )
+)
+
+(defwidget panel-item [color icon text]
+  (box
+    :class "panel-item"
+    :orientation "v"
+    :space-evenly false
+    (box
+      :class "panel-header"
+      :spacing 10
+      :space-evenly false
+      (icon :name icon :color color)
+      text
+    )
+    (box
+      :orientation "v"
+      :space-evenly false
+      :spacing 14
+      (children)
+    )
+  )
+)
+
+(defwidget panel-monitors []
+  (panel-item
+    :color "red"
+    :icon "monitor"
+    :text "Monitors"
+    (eventbox
+      :ondropped "set-wallpaper {}"
+      ;:height 108
+      ;:width 256
+      (button
+        :onclick "quick-app -c Thunar -f \
+          && thunar /home/edwin/.local/share/backgrounds"
+          ;&& thunar /mnt/raid/pictures/wallpapers/2560x1080"
+        (image
+          :class "panel-wallpaper"
+          :path "/home/edwin/.config/wallpaper"
+          :image-height 108
+          :image-width 256
+        )
+      )
+    )
+    (box
+      :space-evenly false
+      :spacing 10
+      (button
+        :class "checkbox"
+        :onclick "eww update externalMonitor=${!externalMonitor}"
+        (icon :name {externalMonitor ? "check-square" : "square"})
+      )
+      "Enable Projector"
+    )
+    ;(box
+      ;:class "wallpaper-buttons"
+      ;(button "C")
+      ;(button "F")
+      ;(button "M")
+      ;(button "S")
+      ;(button "T")
+    ;)
+  )
+)
+
+(defwidget panel-sliders []
+  (panel-item
+    :color "green"
+    :icon "sliders"
+    :text "Sliders"
+    (slider :icon "volume-2" :value volume)
+    (slider :icon "sun" :value nightlight)
+    (slider :icon "moon" :value brightness)
+  )
+)
+
+(defwidget slider [icon value]
+  (box
+    :space-evenly false
+    (icon :name icon)
+    (scale
+      :class "slider"
+      ;:draw-value true
+      ;:flipped true
+      :min 0
+      :max 11
+      :value value
+      ;:orientation "v"
+    )
+  )
+)

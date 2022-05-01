@@ -1,0 +1,16 @@
+.dock {
+  background-color: $borderColor;
+  // border: $borderSize solid $borderColor;
+  padding: 0 0 0 $borderSize;
+}
+
+.dock-group {
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+  margin: $borderSize $borderSize $borderSize 0;
+  padding: 5;
+}
+
+.dock-item {
+  padding: 5;
+}

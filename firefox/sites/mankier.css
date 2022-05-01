@@ -1,0 +1,8 @@
+@-moz-document domain(mankier.com) {
+  body {
+    margin: 0;
+  }
+  main {
+    background-color: red;
+  }
+}

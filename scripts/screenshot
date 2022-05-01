@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+#scrot -sl mode=edge,style=solid,width=8,color=black -e 'mv $f ~/unsorted/screenshots'
+# scrot -s -l style=dash,width=5,color="#FF0000",opacity=20 -e 'mv $f ~/unsorted/screenshots'
+scrot -s -l mode=edge,width=7,color="#FFFFFF",opacity=20 -e 'mv $f ~/unsorted/screenshots'

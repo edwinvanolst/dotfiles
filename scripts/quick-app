@@ -1,0 +1,76 @@
+#!/bin/bash
+#
+# find or open apps in bspwm
+#
+# options:
+# -c: window class
+# -i: window instance
+# -f: floaty
+# -n: window name
+#
+# dependencies: jq
+
+function usage {
+  echo "Usage: quick-app -c CLASS -f -i INSTANCE -n NAME [cmd]"
+  exit
+}
+
+# parse arguments
+
+class=''
+instance=''
+floaty=false
+name=''
+while getopts 'c:i:fn:' opt; do
+  case "${opt}" in
+    c) class="${OPTARG}" ;;
+    i) instance="${OPTARG}" ;;
+    f) floaty=true ;;
+    n) name="${OPTARG}" ;;
+    *) usage ;;
+  esac
+done
+[ $OPTIND -eq 1 ] && usage
+shift $(($OPTIND - 1))
+
+# find window
+
+query='xdo id'
+[ -z $class ] || query+=" -N $class"
+[ -z $instance ] || query+=" -n $instance"
+[ -z $name ] || query+=" -a $name"
+id=$($query | head -n 1)
+if [[ "$id" != "" ]]; then
+  focus=$(xdo id)
+  window=($(bspc query -T -n $id | jq -r .client.state,.hidden))
+  if [ "${window[1]}" = "true" ]; then
+    # hidden windows
+    echo hidden
+    bspc node $id -g hidden=off
+    bspc node -f $id
+  elif [ "${window[0]}" = "tiled" ]; then
+    # tiled windows
+    if [ "$focus" = "$id" ]; then
+      bspc node -f last
+    else
+      # hide wallpaper if current page empty
+      bspc query -N -n .local.tiled.!hidden &> /dev/null \
+        || show-wallpaper -h
+      bspc node -f $id
+    fi
+  else
+    # floating windows
+    if [ "$focus" = "$id" ]; then
+      bspc node -g hidden=on
+    else
+      bspc node -f $id
+    fi
+  fi
+else
+  # start app
+  [ $# -gt 0 ] && cmd="$@" || cmd=$class
+  if $floaty; then
+    bspc rule -a $class -o state=floating sticky=on
+  fi
+  $cmd &> /dev/null
+fi

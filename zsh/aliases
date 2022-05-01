@@ -1,0 +1,28 @@
+# aliases
+alias l='ls --color=auto --group-directories-first'
+alias ll='l -lh'
+alias a='l -A'
+alias aa='ll -A'
+alias c='clear'
+alias t='tree --dirsfirst -F -I node_modules'
+
+alias config='nvim ~/system/readme.md -c "cd ~/system | Telescope find_files"'
+alias edf='df -hlTx tmpfs -x devtmpfs -x vfat'
+alias food='nvim ~/notes/food/readme.md -c "cd ~/notes/food | Telescope find_files"'
+alias notes='nvim -c "cd ~/notes | Telescope find_files"'
+alias jcurl='curl -H "Content-Type: application/json"'
+alias psg='ps ax | grep'
+alias renet='sudo systemctl restart systemd-networkd'
+
+# docker
+alias dps='docker ps --format "table {{.ID}}\t{{.Names}}\t{{.Status}}\t{{.Networks}}"'
+alias dlc='dps --all'
+alias dli='docker images'
+alias dln='docker network ls'
+alias drc='docker rm'
+alias dri='docker image rm'
+alias drn='docker network rm'
+alias dsc='docker stop'
+
+# aliases with sudo
+alias sudo='sudo '

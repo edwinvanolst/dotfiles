@@ -1,0 +1,152 @@
+# ~/.config/sxhkd/sxhkdrc
+
+# 1. Function Row
+# ---------------
+# Esc: Close window (shift: kill)
+super + {_,shift + }Escape
+  close-window {_,kill}
+# F1: Clock
+super + F1
+  notify --icon=clock-applet-symbolic -t 750 $(date +%H:%M)
+# F2: Resize 16x9 (shift: 4x3)
+super + {_,shift + }F2
+  resize-ratio {_,4 3}
+# F3: Restart menu
+super + F3
+  launch-jgmenu --checkout=restart
+# F4: Scripts menu
+super + F4
+  launch-jgmenu --checkout=scripts
+# F5: Toggle hot-corners
+super + F5
+  toggle-daemon hotspots
+# F6: Toggle borders
+super + F6
+  toggle-borders
+# F7: Toggle borders
+super + F7
+  toggle-daemon cec-daemon
+
+# 2. Number Row
+# -------------
+# Grave (`): Cycle occupied desktops (shift: reverse)
+super + {_,shift + }grave
+	show-desktop {next,prev}
+# Numbers (0-9): Show desktop 
+super + {0-9}
+	show-desktop {0-9}
+# Shift + Number: Move to desktop
+super + shift + {0-9}
+	bspc node -d {0-9}
+
+# 3. Letters
+# ----------
+
+# A: sticky
+super + a
+  bspc node -g sticky=on
+
+# B: balance
+super + b
+  bspc node @/ -B
+
+# D: New desktop
+super + d
+  show-desktop empty
+
+# E: sticky explorer
+super + e
+  quick-app -c Thunar -f thunar
+
+# F: flip
+super + f
+	bspc node @parent -R 180
+
+# H: toggle hidden (ctrl: hide)
+super + h
+  toggle-hidden
+
+super + ctrl + h
+  bspc node -g hidden
+
+# Q: sticky terminal
+super + q
+  quick-app -c kitty -i quick -f kitty --name quick
+
+# R: rotate
+super + r
+	bspc node @parent -R 90
+
+# S: screenshot
+super + {_,shift +}s
+  screenshot
+
+# T: float/tile
+super + t
+  bspc node -t \~floating
+
+# V: vault
+super + v
+	launch-rofi vault
+
+# W: Widgets
+super + w
+  toggle-widgets
+
+# X: resize to window
+super + x
+  resize-cover 
+
+# Z: monocle
+super + z
+	bspc desktop -l next
+
+# 4. Special Keys
+# ---------------
+
+# Tab: cycle windows
+super + {_,shift + }Tab
+	bspc node -f {next,prev}.local.!hidden.window
+
+# Enter: terminal (shift: scratchpad)
+super + Return
+  kitty
+
+# Space: rofi
+super + space
+  rofi -show drun -modi drun,run -theme launcher
+
+# 5. Media Keys
+# -------------
+
+# Brightness
+super + {Prior,Next}
+	brightness {up,down}
+super + ctrl + {button4,button5}
+	brightness {up,down}
+
+# Volume
+{XF86AudioRaiseVolume,XF86AudioLowerVolume}
+  volume {up,down}
+super + {button4,button5}
+  volume {up,down}
+
+# 6. Numpad
+# ---------
+
+# Receptacles
+super + KP_Add
+	bspc node -i
+super + KP_Subtract
+	bspc node 'any.leaf.local.!window' -k
+super + KP_Multiply
+	bspc node -n 'any.leaf.local.!window'
+
+# 7. Arrow Keys
+# -------------
+super + {Up,Down}
+	bspc node -f @{parent, brother}
+# super + End
+# 	bspc node -f @brother
+#super + {Left,Down,Up,Right}
+#	bspc node -p {west,south,north,east}

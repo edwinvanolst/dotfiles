@@ -1,0 +1,75 @@
+#!/bin/bash
+#
+# bspwm event handler to:
+# - show or hide wallpaper when needed
+# - set xprop on tiled windows (for picom [shadow-exclude])
+# - update eww variables
+
+countTiles() {
+  return $(bspc query -N -n .!hidden.local.tiled.window | wc -l)
+}
+
+hideBackground() {
+  countTiles
+  [ $? -eq 1 ] && show-wallpaper -h
+}
+
+showBackground() {
+  countTiles
+  [ $? -eq 0 ] && show-wallpaper
+}
+
+events=(
+  'node_add'
+  'node_flag'
+  'node_focus'
+  'node_remove'
+  'node_state'
+  'node_transfer'
+)
+
+bspc subscribe ${events[*]} | while read -a event; do
+  case "${event[0]}" in
+    node_add)
+      read -r _ _ _ _ node <<< "${event[*]}"
+      xprop -id "$node" -f EDDE_TILE 32c -set EDDE_TILE 1
+      hideBackground;;
+    node_flag)
+      read -r _ _ _ flag value <<< "${event[*]}"
+      case "$flag" in 
+        hidden)
+          case "$value" in
+            off) hideBackground;;
+            on) showBackground;;
+          esac;;
+      esac;;
+    node_focus)
+      bspc query -N -n .focused.floating &> /dev/null \
+        && eww update focusIsFloaty=true \
+        || eww update focusIsFloaty=false
+      # if bspc query -N -n .focused.floating &> /dev/null; then
+        # eww update focusIsFloaty=true
+      # else
+        # eww update focusIsFloaty=false
+      # fi;;
+      ;;
+    node_remove)
+      showBackground;;
+    node_state)
+      read -r _ _ _ node state value <<< "${event[*]}"
+      if [ "$state" = "floating" ]; then
+        case "$value" in
+          off)
+            xprop -id "$node" -f EDDE_TILE 32c -set EDDE_TILE 1
+            eww update focusIsFloaty=false
+            hideBackground;;
+          on)
+            xprop -id "$node" -remove EDDE_TILE
+            eww update focusIsFloaty=true
+            showBackground;;
+        esac
+      fi;;
+    node_transfer)
+      showBackground;;
+  esac
+done

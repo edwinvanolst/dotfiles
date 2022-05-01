@@ -1,0 +1,17 @@
+# ~/.xinitrc
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+  for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
+dunst &
+eww daemon &
+hotspots &
+numlockx &
+picom -b &
+sxhkd -c ~/system/bspwm/sxhkdrc &
+xsetroot -cursor_name left_ptr &
+exec bspwm

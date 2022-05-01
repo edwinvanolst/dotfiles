@@ -1,0 +1,18 @@
+# ~/.zprofile
+
+# path
+export PATH=$PATH:$HOME/system/scripts:$HOME/.symfony/bin:$HOME/.local/bin/npm
+
+# qt
+export QT_SCALE_FACTOR=1.2
+
+# my desktop environment
+export EDDE_BORDER=5
+export EDDE_GAP=5
+export EDDE_CLR_ACCENT="#c0caf5"
+export EDDE_CLR_FOCUS="#414868"
+export EDDE_CLR_BORDER="#24283b"
+export EDDE_CLR_WINDOW="#1a1b26"
+
+# xorg
+[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && startx > /dev/null 2>&1

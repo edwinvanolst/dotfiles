@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# close any or open edge widgets
+
+eww close dock &> /dev/null
+if [ $? -eq 0 ]; then
+  eww close bar dock panel status
+else
+  eww open-many bar dock panel status
+fi

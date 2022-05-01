@@ -1,0 +1,37 @@
+#!/bin/bash
+log="/home/edwin/bspwm-external-rules.log"
+wid=$1
+class=$2
+instance=$3
+consequences=$4
+
+if [ "$instance" = "steam" ]; then
+  title=$(xdotool getwindowname $wid)
+  echo $wid $title >> $log
+fi
+
+case "$class" in
+  "kitty")
+    eval "$consequences"
+    [ "$state" ] || echo "state=floating"
+    ;;
+esac
+# if [[ $class == "dota2" ]]; then
+	# dunstify "GAME MODE" "Play dotka win vodka"
+#elif [[ $class == "discord" ]]; then
+#  if [[ $title == "Discord Updater" ]]; then
+#  elif [[ $title == "Discord" ]]; then
+#  fi
+#elif [[ $class == "Steam" ]]; then
+#  if [[ $title == "Friends List" ]]; then
+#  elif [[ $title == "Settings" ]]; then
+#  fi
+# fi
+
+#if [ "$instance" = discord ]; then
+#  echo DISCORD: $1 $2 $3 $4 >> $log
+#elif [ "$instance" = Steam ]; then
+#  echo STEAM: $1 $2 $3 $4 >> $log
+#else
+#  echo $1 $2 $3 $4 >> $log
+#fi

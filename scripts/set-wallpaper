@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# set the wallpaper
+#
+# options:
+# -c: center
+# -f: fill
+# -m: maximize
+# -s: scale
+# -t: tile
+
+notify "Wallpaper set"
+feh --bg-fill ${1:7} &
+ln -sf "${1:7}" "/home/edwin/.config/wallpaper" &
+
+# reload panel to show updated image
+eww close panel && eww open panel
