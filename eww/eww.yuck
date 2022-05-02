@@ -1,8 +1,6 @@
-; options
 (defvar appIcons "/usr/share/icons/Papirus-Dark/48x48/apps/")
 (defvar barIcons "/home/edwin/workspace/feather-icons")
 
-; desktop variables
 (defvar disableBorders false)
 (defvar externalMonitor false)
 (defvar focusIsFloaty false)

@@ -84,6 +84,13 @@
     (slider :icon "volume-2" :value volume)
     (slider :icon "sun" :value nightlight)
     (slider :icon "moon" :value brightness)
+    "Audio Device"
+    (box
+      :space-evenly false
+      (button :class "button" :onclick "audio-device stereo-game" "Headset")
+      (button :class "button" :onclick "audio-device HD3" "Speakers")
+      (button :class "button" :onclick "audio-device pci-0000_00_1b" "Soundbar")
+    )
   )
 )
 
