@@ -99,7 +99,7 @@
   )
 )
 
-(defwidget slider [icon ?setter value]
+(defwidget slider [icon ?setter ?value]
   (eventbox
     :onscroll setter
     (box
