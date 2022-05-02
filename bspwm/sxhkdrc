@@ -2,42 +2,53 @@
 
 # 1. Function Row
 # ---------------
+
 # Esc: Close window (shift: kill)
 super + {_,shift + }Escape
   close-window {_,kill}
-# F1: Clock
-super + F1
-  notify --icon=clock-applet-symbolic -t 750 $(date +%H:%M)
-# F2: Resize 16x9 (shift: 4x3)
-super + {_,shift + }F2
+
+# F1: Resize 16x9 (shift: 4x3)
+super + {_,shift + }F1
   resize-ratio {_,4 3}
+
+# F2: jgmenu
+super + F2
+  launch-jgmenu
+
 # F3: Restart menu
 super + F3
   launch-jgmenu --checkout=restart
+
 # F4: Scripts menu
 super + F4
   launch-jgmenu --checkout=scripts
+
 # F5: Toggle hot-corners
 super + F5
   toggle-daemon hotspots
+
 # F6: Toggle borders
 super + F6
   toggle-borders
+
 # F7: Toggle borders
 super + F7
   toggle-daemon cec-daemon
 
 # 2. Number Row
 # -------------
+
 # Grave (`): Cycle occupied desktops (shift: reverse)
 super + {_,shift + }grave
-	show-desktop {next,prev}
+  show-desktop {next,prev}
+
 # Numbers (0-9): Show desktop 
 super + {0-9}
-	show-desktop {0-9}
+  show-desktop {0-9}
+
 # Shift + Number: Move to desktop
 super + shift + {0-9}
-	bspc node -d {0-9}
+  bspc node -d {0-9}
 
 # 3. Letters
 # ----------
@@ -60,7 +71,7 @@ super + e
 
 # F: flip
 super + f
-	bspc node @parent -R 180
+  bspc node @parent -R 180
 
 # H: toggle hidden (ctrl: hide)
 super + h
@@ -75,7 +86,7 @@ super + q
 
 # R: rotate
 super + r
-	bspc node @parent -R 90
+  bspc node @parent -R 90
 
 # S: screenshot
 super + {_,shift +}s
@@ -87,7 +98,7 @@ super + t
 
 # V: vault
 super + v
-	launch-rofi vault
+  launch-rofi vault
 
 # W: Widgets
 super + w
@@ -99,14 +110,14 @@ super + x
 
 # Z: monocle
 super + z
-	bspc desktop -l next
+  toggle-monocle
 
 # 4. Special Keys
 # ---------------
 
 # Tab: cycle windows
 super + {_,shift + }Tab
-	bspc node -f {next,prev}.local.!hidden.window
+  bspc node -f {next,prev}.local.!hidden.window
 
 # Enter: terminal (shift: scratchpad)
 super + Return
@@ -136,17 +147,13 @@ super + {button4,button5}
 
 # Receptacles
 super + KP_Add
-	bspc node -i
+  bspc node -i
 super + KP_Subtract
-	bspc node 'any.leaf.local.!window' -k
+  bspc node 'any.leaf.local.!window' -k
 super + KP_Multiply
-	bspc node -n 'any.leaf.local.!window'
+  bspc node -n 'any.leaf.local.!window'
 
 # 7. Arrow Keys
 # -------------
 super + {Up,Down}
-	bspc node -f @{parent, brother}
-# super + End
-# 	bspc node -f @brother
-#super + {Left,Down,Up,Right}
-#	bspc node -p {west,south,north,east}
+  bspc node -f @{parent, brother}
