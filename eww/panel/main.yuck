@@ -8,8 +8,8 @@
     :class "panel"
     :orientation "v"
     :space-evenly false
-    (panel-monitors)
-    (panel-sliders)
+    (panel-audio)
+    (panel-video)
   )
 )
 
@@ -34,11 +34,11 @@
   )
 )
 
-(defwidget panel-monitors []
+(defwidget panel-video []
   (panel-item
     :color "red"
     :icon "monitor"
-    :text "Monitors"
+    :text "Video"
     (eventbox
       :ondropped "set-wallpaper {}"
       ;:height 108
@@ -46,7 +46,6 @@
       (button
         :onclick "quick-app -c Thunar -f \
           && thunar /home/edwin/.local/share/backgrounds"
-          ;&& thunar /mnt/raid/pictures/wallpapers/2560x1080"
         (image
           :class "panel-wallpaper"
           :path "/home/edwin/.config/wallpaper"
@@ -54,6 +53,11 @@
           :image-width 256
         )
       )
+    )
+    (slider
+      :icon "sun"
+      :setter "set-brightness {}"
+      ;:value brightness
     )
     (box
       :space-evenly false
@@ -76,36 +80,38 @@
   )
 )
 
-(defwidget panel-sliders []
+(defwidget panel-audio []
   (panel-item
     :color "green"
     :icon "sliders"
-    :text "Sliders"
-    (slider :icon "volume-2" :value volume)
-    (slider :icon "sun" :value nightlight)
-    (slider :icon "moon" :value brightness)
-    "Audio Device"
+    :text "Audio"
     (box
       :space-evenly false
       (button :class "button" :onclick "audio-device stereo-game" "Headset")
       (button :class "button" :onclick "audio-device HD3" "Speakers")
       (button :class "button" :onclick "audio-device pci-0000_00_1b" "Soundbar")
     )
+    (slider
+      :icon "volume-2"
+      :setter "set-volume {}"
+      :value volume
+    )
   )
 )
 
-(defwidget slider [icon value]
-  (box
-    :space-evenly false
-    (icon :name icon)
-    (scale
-      :class "slider"
-      ;:draw-value true
-      ;:flipped true
-      :min 0
-      :max 11
-      :value value
-      ;:orientation "v"
+(defwidget slider [icon ?setter value]
+  (eventbox
+    :onscroll setter
+    (box
+      :space-evenly false
+      (icon :name icon)
+      (scale
+        :class "slider"
+        :min 0
+        :max 11
+        :onchange setter
+        :value value
+      )
     )
   )
 )

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# adjust volume
+#
+# usage: set-volume [0-10|up|down|mute]
+
+function setVolume {
+  eww update volume=$1
+  pamixer --set-volume $1\0
+  notify $1
+}
+
+function toggleMute {
+  if [ "$(eww get muted)" = "true" ]; then
+    eww update muted=false
+    pamixer -m
+    notify Mute
+  else
+    eww update muted=true
+    pamixer -u
+    notify Unmute
+  fi
+}
+
+V=$(eww get volume)
+case "$1" in
+  "down") [ "$V" -gt 0 ] && setVolume $((V-1));;
+  "up") [ "$V" -lt 10 ] && setVolume $((V+1));;
+  "mute") toggleMute;;
+  *) [[ $1 =~ ^[0-9]+ ]] && setVolume ${1%.*};;
+esac

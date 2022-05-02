@@ -121,15 +121,15 @@ super + space
 
 # Brightness
 super + {Prior,Next}
-	brightness {up,down}
+  set-brightness {up,down}
 super + ctrl + {button4,button5}
-	brightness {up,down}
+  set-brightness {up,down}
 
 # Volume
 {XF86AudioRaiseVolume,XF86AudioLowerVolume}
-  volume {up,down}
+  set-volume {up,down}
 super + {button4,button5}
-  volume {up,down}
+  set-volume {up,down}
 
 # 6. Numpad
 # ---------

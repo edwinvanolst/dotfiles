@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# adjust brightness
+#
+# usage: set-brightness [0-10|up|down]
+
+setBrightness() {
+  eww update brightness=$1
+  notify "$1"
+  case "$1" in
+    10) B=1;;
+    0) B=0.02;;
+    *) B=0.$1;;
+  esac
+  xrandr --output DisplayPort-0 --brightness $B
+}
+
+B=$(eww get brightness)
+case "$1" in
+  "up") [ "$B" -lt 10 ] && setBrightness $((B+1));;
+  "down") [ "$B" -gt 0 ] && setBrightness $((B-1));;
+  *) [[ $1 =~ ^[0-9]+ ]] && setBrightness ${1%.*};;
+esac
