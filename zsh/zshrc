@@ -6,4 +6,6 @@
 # autocompletion
 autoload -Uz compinit && compinit
 autoload -Uz bashcompinit && bashcompinit
+
+# prompt
 eval "$(starship init zsh)"
