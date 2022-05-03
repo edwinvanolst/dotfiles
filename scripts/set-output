@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+# often-used monitor and speaker settings
+#
+# usage: set-output -a [DEVICE] -e [true|false] -u [true|false]
+# -a: set default audio device
+# -e: enable external monitor
+# -u: ultrawide resolution (disable for recording in 1920x1080)
+
+A=''
+E=''
+U=''
+while getopts ':a:e:u:' opt; do
+  case "${opt}" in
+    a) A="${OPTARG}";;
+    e) E="${OPTARG}";;
+    u) U="${OPTARG}";;
+  esac
+done
+
+# audio device
+if [ "$A" != "" ]; then
+  newSink=$(pactl list short sinks | grep $A | cut -f1)
+  if [ -n "$newSink" ]; then
+    pactl list short sink-inputs|while read stream; do
+      streamId=$(echo $stream|cut '-d ' -f1)
+      pactl move-sink-input "$streamId" "$newSink"
+      pactl set-default-sink $newSink
+    done
+  fi
+fi
+
+# external monitor
+if [ "$E" = "true" ]; then
+  notify "enable external"
+  xrandr --output HDMI-A-0 --auto
+  eww update externalMonitor=true
+elif [ "$E" = "false" ]; then
+  notify "disable external"
+  eww update externalMonitor=false
+fi
+
+# ultrawide resolution
+if [ "$U" = "false" ]; then
+  eww update ultrawide=false
+  notify "disable ultrawide"
+  xrandr --output DisplayPort-0 --mode 1920x1080
+elif [ "$U" = "true" ]; then
+  eww update ultrawide=true
+  notify "enable ultrawide"
+  xrandr --output DisplayPort-0 --auto
+fi

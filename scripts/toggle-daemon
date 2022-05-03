@@ -1,17 +1,30 @@
 #!/bin/bash
 #
-# start or stop a daemon
+# toggle or restart a daemon
+#
+# usage: toggle-daemon [-r] NAME
+
+RESTART=false
+while getopts 'r' opt; do
+  case "${opt}" in
+    r) RESTART=true;;
+  esac
+done
+shift $(($OPTIND - 1))
 
 if [ $# -eq 1 ]; then
   PIDS=($(pgrep -f $1))
   echo ${PIDS[@]}
   if [ ${#PIDS[@]} -gt 1 ]; then
     kill ${PIDS[0]}
-    notify -r 5 "Stopped: $1"
-    echo stopped
+    if [ $RESTART = true ]; then
+      $1 &
+      notify -r 5 "Restarted: $1"
+    else
+      notify -r 5 "Stopped: $1"
+    fi
   else
     $1 &
     notify -r 5 "Started: $1"
-    echo started
   fi
 fi
