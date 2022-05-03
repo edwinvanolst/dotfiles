@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Hotspots for Xorg:
+# Hotspots for Xorg
 # - Corners: BL, BR, TL, TR
 # - Edges: B, T, L, R
 # - Events: onEnter, onExit
@@ -13,14 +13,12 @@
 # hotspot size
 SIZE=2
 
-# edge dimensions (width, height)
+# active hotspot dimensions (width, height)
 B=(1100 140)
 T=(700 $SIZE)
 L=(460 700)
 R=(140 700)
-
-# corner dimensions (width, height)
-BL=(770 630)
+BL=(400 400)
 BR=($SIZE $SIZE)
 TL=(400 300)
 TR=($SIZE $SIZE)
@@ -35,18 +33,17 @@ function cycleDesktops {
 }
 
 function onEnter {
-  # echo onEnter $1
   ZONE=$1
   case "$1" in
     'B') eww open-many dock status &> /dev/null;;
     'L') eww open panel &> /dev/null;;
     'R') eww open bar &> /dev/null;;
+    'BL') launch-rofi;;
     'TR') cycleDesktops;;
   esac
 }
 
 function onExit {
-  # echo onExit $1
   ZONE=''
   case "$1" in
     'B') eww close dock status &> /dev/null;;

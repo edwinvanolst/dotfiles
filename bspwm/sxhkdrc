@@ -15,7 +15,7 @@ super + {_,shift + }Tab
 
 # open launcher
 super + space
-  rofi -show drun -modi drun,run -theme launcher
+  launch-rofi
 
 # open terminal
 super + Return
