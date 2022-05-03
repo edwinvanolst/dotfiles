@@ -13,9 +13,38 @@
   )
 )
 
-(defwidget panel-item [color icon text]
+; Panel Items
+
+(defwidget panel-buttons []
   (box
-    :class "panel-item"
+    :class "panel-buttons"
+    :space-evenly false
+    (children)
+  )
+)
+
+(defwidget panel-slider [icon ?setter ?value]
+  (eventbox
+    :onscroll setter
+    (box
+      :space-evenly false
+      (icon :name icon)
+      (scale
+        :class "panel-slider"
+        :min 0
+        :max 11
+        :onchange setter
+        :value value
+      )
+    )
+  )
+)
+
+; Panel Sections
+
+(defwidget panel-section [color icon title]
+  (box
+    :class "panel-section"
     :orientation "v"
     :space-evenly false
     (box
@@ -23,7 +52,7 @@
       :spacing 10
       :space-evenly false
       (icon :name icon :color color)
-      text
+      title
     )
     (box
       :orientation "v"
@@ -34,15 +63,49 @@
   )
 )
 
+(defwidget panel-audio []
+  (panel-section
+    :color "green"
+    :icon "sliders"
+    :title "Audio"
+
+    ; audio device
+    (panel-buttons
+      (button :onclick "audio-device pci-0000_00_1b" "Bar")
+      (button :onclick "audio-device stereo-game" "Headset")
+      (button :onclick "audio-device HD3" "Speakers")
+    )
+
+    ; volume slider
+    (panel-slider
+      :icon "volume-2"
+      :setter "set-volume {}"
+      :value volume
+    )
+  )
+)
+
 (defwidget panel-video []
-  (panel-item
+  (panel-section
     :color "red"
     :icon "monitor"
-    :text "Video"
+    :title "Video"
+
+    ; resolution picker
+    (panel-buttons
+      (button
+        :onclick "audio-device pci-0000_00_1b"
+        "1920x1080"
+      )
+      (button
+        :onclick "audio-device stereo-game"
+        "2560x1080"
+      )
+    )
+
+    ; wallpaper setter
     (eventbox
       :ondropped "set-wallpaper {}"
-      ;:height 108
-      ;:width 256
       (button
         :onclick "quick-app -c Thunar -f \
           && thunar /home/edwin/.local/share/backgrounds"
@@ -54,11 +117,15 @@
         )
       )
     )
-    (slider
+
+    ; brightness slider
+    (panel-slider
       :icon "sun"
       :setter "set-brightness {}"
-      ;:value brightness
+      :value brightness
     )
+
+    ; external monitor
     (box
       :space-evenly false
       :spacing 10
@@ -67,51 +134,7 @@
         :onclick "eww update externalMonitor=${!externalMonitor}"
         (icon :name {externalMonitor ? "check-square" : "square"})
       )
-      "Enable Projector"
-    )
-    ;(box
-      ;:class "wallpaper-buttons"
-      ;(button "C")
-      ;(button "F")
-      ;(button "M")
-      ;(button "S")
-      ;(button "T")
-    ;)
-  )
-)
-
-(defwidget panel-audio []
-  (panel-item
-    :color "green"
-    :icon "sliders"
-    :text "Audio"
-    (box
-      :space-evenly false
-      (button :class "button" :onclick "audio-device stereo-game" "Headset")
-      (button :class "button" :onclick "audio-device HD3" "Speakers")
-      (button :class "button" :onclick "audio-device pci-0000_00_1b" "Soundbar")
-    )
-    (slider
-      :icon "volume-2"
-      :setter "set-volume {}"
-      :value volume
-    )
-  )
-)
-
-(defwidget slider [icon ?setter ?value]
-  (eventbox
-    :onscroll setter
-    (box
-      :space-evenly false
-      (icon :name icon)
-      (scale
-        :class "slider"
-        :min 0
-        :max 11
-        :onchange setter
-        :value value
-      )
+      "External Monitor"
     )
   )
 )

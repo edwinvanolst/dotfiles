@@ -1,62 +1,63 @@
-// dock
 .panel {
   background-color: $borderColor;
-  border: $borderSize solid $borderColor;
+  padding: $borderSize;
+
   .button {
     background-color: $borderColor;
     border-radius: $borderRadius;
     margin-left: 10;
     padding: 8;
+
     &:first-child {
       margin-left: 0;
     }
   }
 }
 
-.panel-item {
-  background-color: $bgColor;
-  padding: 14;
+.panel-buttons {
+  button {
+    background-color: $borderColor;
+    border-radius: $borderRadius;
+    margin-left: 14;
+    padding: 7 9;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
 }
 
 .panel-header {
   margin-bottom: 14;
-  // &:first-child {
-    // margin-top: 0;
-  // }
 }
 
-.panel-wallpaper {
-  border: 3px solid $borderColor;
-}
+.panel-section {
+  background-color: $bgColor;
+  border-radius: $borderRadius;
+  margin-top: $borderSize;
+  padding: 14;
 
-.wallpaper-buttons {
-  margin-top: 10;
-  & > button {
-    background-color: $borderColor;
-    border-radius: $borderRadius;
-    margin-left: 10;
-    padding: 7;
-    &:first-child {
-      margin-left: 0;
-    }
+  &:first-child {
+    margin-top: 0;
   }
 }
 
-.slider {
-  // background-color: red;
-  // & > marks.top > mark
-  // & > marks.bottom > mark
+.panel-slider {
   margin-left: 10;
+
   trough {
     background-color: $borderColor;
     border-radius: 5;
     min-height: 10px;
     min-width: 232px;
+
     highlight {
       border-radius: 5;
       background-color: #414868;
     }
   }
-  // & > trough > highlight
-  // & > trough > fill
+}
+
+.panel-wallpaper {
+  border: 3px solid $borderColor;
 }
