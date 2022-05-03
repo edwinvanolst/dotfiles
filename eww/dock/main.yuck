@@ -15,7 +15,7 @@
       )
       (dock-item
         :icon "nautilus"
-        :lclick "quick-app -c Thunar -f thunar"
+        :lclick "quick-app -c Thunar -f thunar ~/unsorted"
       )
       (dock-item
         :icon "terminal"
