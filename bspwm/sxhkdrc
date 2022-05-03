@@ -1,46 +1,51 @@
-# ~/.config/sxhkd/sxhkdrc
+# Keybindings
+#############
 
-# 1. Function Row
-# ---------------
-
-# Esc: Close window (shift: kill)
+# close window (shift: kill)
 super + {_,shift + }Escape
   close-window {_,kill}
 
-# F1: Resize 16x9 (shift: 4x3)
-super + {_,shift + }F1
-  resize-ratio {_,4 3}
+# cycle occupied desktops (shift: reverse)
+super + {_,shift + }grave
+  show-desktop {next,prev}
 
-# F2: jgmenu
-super + F2
+# cycle windows
+super + {_,shift + }Tab
+  bspc node -f {next,prev}.local.!hidden.window
+
+# open launcher
+super + space
+  rofi -show drun -modi drun,run -theme launcher
+
+# open terminal
+super + Return
+  kitty
+
+# 1. Function Keys
+##################
+
+# jgmenu
+super + F1
   launch-jgmenu
-
-# F3: Restart menu
-super + F3
+super + F2
   launch-jgmenu --checkout=restart
-
-# F4: Scripts menu
-super + F4
+super + F3
   launch-jgmenu --checkout=scripts
 
-# F5: Toggle hot-corners
+# resize window to aspect ratio
+super + {_,shift + }F4
+  resize-ratio {_,4 3}
+
+# toggles
 super + F5
   toggle-daemon hotspots
-
-# F6: Toggle borders
 super + F6
   toggle-borders
-
-# F7: Toggle borders
 super + F7
   toggle-daemon cec-daemon
 
-# 2. Number Row
-# -------------
-
-# Grave (`): Cycle occupied desktops (shift: reverse)
-super + {_,shift + }grave
-  show-desktop {next,prev}
+# 2. Number Keys
+################
 
 # Numbers (0-9): Show desktop 
 super + {0-9}
@@ -50,85 +55,71 @@ super + {0-9}
 super + shift + {0-9}
   bspc node -d {0-9}
 
-# 3. Letters
-# ----------
+# 3. Letter Keys
+################
 
-# A: sticky
+# toggle sticky
 super + a
   bspc node -g sticky=on
 
-# B: balance
+# balance
 super + b
   bspc node @/ -B
 
-# D: New desktop
+# show empty desktop
 super + d
   show-desktop empty
 
-# E: sticky explorer
+# file explorer
 super + e
   quick-app -c Thunar -f thunar
 
-# F: flip
+# flip
 super + f
   bspc node @parent -R 180
 
-# H: toggle hidden (ctrl: hide)
+# toggle hidden
 super + h
   toggle-hidden
 
+# hide window
 super + ctrl + h
   bspc node -g hidden
 
-# Q: sticky terminal
+# scratchpad terminal
 super + q
   quick-app -c kitty -i quick -f kitty --name quick
 
-# R: rotate
+# rotate
 super + r
   bspc node @parent -R 90
 
-# S: screenshot
+# screenshot
 super + {_,shift +}s
   screenshot
 
-# T: float/tile
+# toggle floaty (floating+sticky)
 super + t
-  bspc node -t \~floating
+  toggle-floaty
 
-# V: vault
+# vault
 super + v
   launch-rofi vault
 
-# W: Widgets
+# toggle widgets
 super + w
   toggle-widgets
 
-# X: resize to window
+# resize to window
 super + x
   resize-cover 
 
-# Z: monocle
+# toggle monocle mode
 super + z
   toggle-monocle
 
-# 4. Special Keys
-# ---------------
-
-# Tab: cycle windows
-super + {_,shift + }Tab
-  bspc node -f {next,prev}.local.!hidden.window
-
-# Enter: terminal (shift: scratchpad)
-super + Return
-  kitty
-
-# Space: rofi
-super + space
-  rofi -show drun -modi drun,run -theme launcher
-
-# 5. Media Keys
-# -------------
+# 4. Media Keys
+###############
 
 # Brightness
 super + {Prior,Next}
@@ -142,8 +133,8 @@ super + ctrl + {button4,button5}
 super + {button4,button5}
   set-volume {up,down}
 
-# 6. Numpad
-# ---------
+# 5. Numpad
+###########
 
 # Receptacles
 super + KP_Add
@@ -153,7 +144,8 @@ super + KP_Subtract
 super + KP_Multiply
   bspc node -n 'any.leaf.local.!window'
 
-# 7. Arrow Keys
-# -------------
+# 6. Arrow Keys
+###############
+
 super + {Up,Down}
   bspc node -f @{parent, brother}
