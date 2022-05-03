@@ -23,9 +23,21 @@
   )
 )
 
+(defwidget panel-checkbox [?change text ?value]
+  (button
+    :onclick change
+    (box
+      :class "panel-checkbox"
+      :space-evenly false
+      (icon :name {value ? "check-square" : "square"})
+      text
+    )
+  )
+)
+
 (defwidget panel-slider [icon ?setter ?value]
   (eventbox
-    :onscroll setter
+    ;:onscroll setter
     (box
       :space-evenly false
       (icon :name icon)
@@ -71,9 +83,9 @@
 
     ; audio device
     (panel-buttons
-      (button :onclick "audio-device pci-0000_00_1b" "Bar")
-      (button :onclick "audio-device stereo-game" "Headset")
-      (button :onclick "audio-device HD3" "Speakers")
+      (button :onclick "set-output -a pci-0000_00_1b" "Bar")
+      (button :onclick "set-output -a stereo-game" "Headset")
+      (button :onclick "set-output -a HD3" "Speakers")
     )
 
     ; volume slider
@@ -90,18 +102,6 @@
     :color "red"
     :icon "monitor"
     :title "Video"
-
-    ; resolution picker
-    (panel-buttons
-      (button
-        :onclick "audio-device pci-0000_00_1b"
-        "1920x1080"
-      )
-      (button
-        :onclick "audio-device stereo-game"
-        "2560x1080"
-      )
-    )
 
     ; wallpaper setter
     (eventbox
@@ -126,15 +126,17 @@
     )
 
     ; external monitor
-    (box
-      :space-evenly false
-      :spacing 10
-      (button
-        :class "checkbox"
-        :onclick "eww update externalMonitor=${!externalMonitor}"
-        (icon :name {externalMonitor ? "check-square" : "square"})
-      )
-      "External Monitor"
+    (panel-checkbox
+      :change "set-output -e ${!externalMonitor}"
+      :text "External Monitor"
+      :value externalMonitor
+    )
+
+    ; ultrawide resolution
+    (panel-checkbox
+      :change "set-output -u ${!ultrawide}"
+      :text "Ultrawide Resolution"
+      :value ultrawide
     )
   )
 )
