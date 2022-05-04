@@ -30,23 +30,29 @@ if [ "$A" != "" ]; then
   fi
 fi
 
+XRANDR=''
+
 # external monitor
 if [ "$E" = "true" ]; then
-  notify "enable external"
-  xrandr --output HDMI-A-0 --auto
+  XRANDR+=' --output HDMI-A-0 --auto --mode 1920x1080 --left-of DisplayPort-0'
   eww update externalMonitor=true
+  notify "enable external"
 elif [ "$E" = "false" ]; then
-  notify "disable external"
+  XRANDR+=' --output HDMI-A-0 --off'
+  # echo pow 0 | cec-client -s -d 1
   eww update externalMonitor=false
+  notify "disable external"
 fi
 
 # ultrawide resolution
 if [ "$U" = "false" ]; then
+  XRANDR+=' --output DisplayPort-0 --mode 1920x1080'
   eww update ultrawide=false
   notify "disable ultrawide"
-  xrandr --output DisplayPort-0 --mode 1920x1080
 elif [ "$U" = "true" ]; then
+  XRANDR+=' --output DisplayPort-0 --mode 2560x1080'
   eww update ultrawide=true
   notify "enable ultrawide"
-  xrandr --output DisplayPort-0 --auto
 fi
+
+[ "$XRANDR" != "" ] && xrandr $XRANDR
