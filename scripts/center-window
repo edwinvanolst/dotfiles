@@ -13,7 +13,6 @@ INFO=($(bspc query -T -n | jq .client.floatingRectangle \
 
 # get screen dimensions (returns: WIDTH, HEIGHT)
 eval $(xdotool getdisplaygeometry --shell)
-# WIDTH=$((WIDTH-EDDE_BORDER))
 
 # center floating window
 if bspc query -N -n .focused.floating &> /dev/null; then
