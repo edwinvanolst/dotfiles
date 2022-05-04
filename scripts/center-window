@@ -4,21 +4,20 @@
 #
 # dependencies: jq, xdotool
 
+# offset (x, y)
+OFFSET=(0 -17)
+
 # get active window dimensions
 INFO=($(bspc query -T -n | jq .client.floatingRectangle \
   | jq -r .x,.y,.width,.height))
 
 # get screen dimensions (returns: WIDTH, HEIGHT)
 eval $(xdotool getdisplaygeometry --shell)
+# WIDTH=$((WIDTH-EDDE_BORDER))
 
 # center floating window
 if bspc query -N -n .focused.floating &> /dev/null; then
-  X=$(((WIDTH-INFO[2])/2-INFO[0]))
-  Y=$(((HEIGHT-INFO[3])/2-INFO[1]))
-  # X=$(((WIDTH-INFO[2])/2))
-  # Y=$(((HEIGHT-INFO[3])/2))
-  echo $X $Y
-  echo ${INFO[0]} ${INFO[1]}
-  
+  X=$(((WIDTH-INFO[2])/2-INFO[0]-EDDE_BORDER+OFFSET[0]))
+  Y=$(((HEIGHT-INFO[3])/2-INFO[1]-EDDE_BORDER+OFFSET[1]))
   bspc node -v $X $Y
 fi
