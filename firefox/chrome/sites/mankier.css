@@ -1,0 +1,54 @@
+@-moz-document domain(mankier.com) {
+  body, html, main {
+    background-color: var(--themeBG) !important;
+  }
+  #Examples_\(TL\;DR\) li {
+    border-left: 3px solid var(--themeBG2) !important;
+  }
+  body {
+    color: var(--themeFG) !important;
+  }
+  a {
+    color: var(--themeBlue) !important;
+  }
+  section a[href^="#-"] {
+    color: var(--themeGreen) !important;
+  }
+  h1 > a, h3{
+    color: var(--themeRed) !important;
+  }
+  h2 {
+    color: var(--themePurple) !important;
+  }
+  var {
+    color: var(--themeYellow) !important;
+  }
+  .man-page-info {
+    color: var(--themeBG3) !important;
+  }
+  footer {
+    display: none !important;
+  }
+  #menu {
+    background-color: var(--themeBG1) !important;
+    padding: 7px;
+  }
+  #menu-scroller a {
+    color: var(--themeFG1) !important;
+  }
+  #menu-scroller .nav-h3,
+  #menu-scroller .nav-h2 li.selected > a {
+    background-color: var(--themeBG2) !important;
+    border: 0 !important;
+    color: var(--themeGreen) !important;
+  }
+  #ta-input {
+    background-color: var(--themeFG2) !important;
+    border-radius: 5px 0 0 5px !important;
+  }
+  #ta button {
+    background-color: var(--themeFG2) !important;
+    border-radius: 0 5px 5px 0 !important;
+    border-left: 0 !important;
+  }
+}
