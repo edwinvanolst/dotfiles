@@ -11,7 +11,7 @@ dunst &
 eww daemon &
 hotspots &
 numlockx &
-picom -b &
+#picom -b &
 sxhkd -c ~/system/bspwm/sxhkdrc &
 xsetroot -cursor_name left_ptr &
 exec bspwm
