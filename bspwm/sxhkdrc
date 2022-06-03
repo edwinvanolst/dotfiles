@@ -147,5 +147,14 @@ super + KP_Multiply
 # 6. Arrow Keys
 ###############
 
-super + {Up,Down}
-  bspc node -f @{parent, brother}
+# Swap
+super + {Up,Down,Left,Right}
+  bspc node -s {north, south, west, east}
+
+# Resize
+super + ctrl + Down
+  bspc node -z top_left 16 9; \
+  bspc node -z bottom_right -16 -9
+super + ctrl + Up
+  bspc node -z top_left -16 -9; \
+  bspc node -z bottom_right 16 9
