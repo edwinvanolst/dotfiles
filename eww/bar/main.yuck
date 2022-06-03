@@ -128,7 +128,6 @@
   (bar-item
     :icon "maximize-2"
     :color "blue"
-    :lclick "resize-ratio"
     :lclick "bspc node -z top_left -16 -9 \
       && bspc node -z bottom_right 16 9"
     :rclick "bspc node -z top_left 16 9 \
